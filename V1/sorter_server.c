@@ -93,14 +93,6 @@ int main(int argc, char * argv[]){
 		printf("error making a socekt\n");
 		exit(0);
 	}
-	int opt = 1;
-
-	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
-                    &opt, sizeof(opt)))
-        {
-            perror("setsockopt");
-                exit(EXIT_FAILURE);
-        }
 
 	bzero((char *) &serv_add, sizeof(serv_add));
 	portno = atoi(argv[2]);
