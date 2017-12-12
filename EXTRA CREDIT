@@ -1,0 +1,17 @@
+Server Session (Extra credit part 2)
+
+SERVER
+1) server has a variable called ID which is initialized to zero.
+2) for each client connection request, Server sends the that client the ID which is the value of ID Variable. ID variable then gets incremented.
+3) Since we have arrays of client_sockets and client_addresses, the ID of the client simply becomes the index number of that particular client
+socket
+4) When the client is finished and sends the ID back to server, the server uses the ID as an index for client sockets arrays and then starts sending the sorted data.
+
+CLIENT
+1) each client has the variable called my_id;
+2)upon the successfull connection the client recives its ID and stores it to the my_id variable.
+3)when client is done traversing through the directories is simply sends back the its ID and recieved the sorted data.
+
+
+
+

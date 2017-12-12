@@ -1,4 +1,4 @@
-/*#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -26,13 +26,43 @@
 #include <dirent.h>
 #include<pthread.h>
 
-*/
-#include "sorter_server.h"
+
+#include "sorter.h"
 #include "mergesort.c"
 
 
-//void* thread_func(void *);
 
+
+struct socket{
+
+	int client_socket;
+	int my_num;
+
+};
+
+
+
+struct sockaddr_in clients_addr[5000];
+int clients_sock[5000];
+socklen_t clilens[5000];
+int client_index = 0;
+
+
+
+
+/****ArrayList for Threads and Struts*****/
+pthread_t * ts;//threads
+struct socket * sockets; //structs
+int ts_index=0;
+int ts_limit = 5000;
+
+
+/**lock**/
+//pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t merge_lock = PTHREAD_MUTEX_INITIALIZER;
+
+//void* thread_func(void *);
+void get_client_contents(int,char[]);
 
 int main(int argc, char * argv[]){
 
@@ -174,15 +204,6 @@ void* thread_func(void * ptr){
 
 
 void get_client_contents(int clientfd, char file_name[]){
-
-
-	//sending the ID
-pthread_mutex_lock(&merge_lock);
-	write(clientfd, &ID,4);
-	ID++;
-pthread_mutex_unlock(&merge_lock);
-
-	
 
 	char line[1000];
 	int n = 0; 
@@ -465,12 +486,6 @@ pthread_mutex_unlock(&merge_lock);
 	
 	
 /*--------------------------------------SENDING THE DATA BACK--------------------------------*/
-
-	int client_ID =-1 ;
-	read(clientfd, &client_ID, 4);
-	//printf("client id is: %d\n", client_ID);
-
-
 	FILE * file = fopen(file_name, "r");
 	if (file == NULL){
 

@@ -1,15 +1,54 @@
-#include "sorter_client.h"
+#include "sorter.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <sys/un.h>
+#include <sys/ioctl.h>
+#include <sys/wait.h>
+#include <sys/select.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <netdb.h> //for gethostbyname
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <signal.h>
 
 
 
 
 
 
+
+
+char temp_sort[50];
+int sockfd , clientfd, n, portno;
+struct hostent* server;
+char header[500];
+
+struct sockaddr_in serv_add , client_add;
+socklen_t clilen;
 
 
 int main(int argc, char * argv[]){
 
-  
+   char * host;
+    
+	/**name for initial director**/
+    char initial_dir_name[1048];
+
    
 	
 	
@@ -214,10 +253,6 @@ int main(int argc, char * argv[]){
 
 	}*/
 
-	int my_id = -1;
-	read(sockfd, &my_id , 4);
-	//printf("my Id from server: %d\n", my_id);
-
 	
 
 
@@ -256,7 +291,7 @@ int main(int argc, char * argv[]){
 
 /*------------------------------REQUESTING THE SERVER TO SEND THE SORTED DATA BACK AND WRITING IT BACK---------------------------------------*/
 
-	write(sockfd,&my_id, 4);
+
 	
 	char output_file_name[50];
 	get_output_name(output_dir_name,NULL, output_file_name,strcmp("NONE",output_dir_name)==0? 0: 1);
