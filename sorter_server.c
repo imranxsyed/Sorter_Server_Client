@@ -1,36 +1,7 @@
-/*#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-#include <netdb.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/time.h>
-#include <sys/un.h>
-#include <sys/ioctl.h>
-#include <sys/wait.h>
-#include <sys/select.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <time.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
-#include<string.h>
-#include<ctype.h>
-#include<math.h>
-#include <sys/types.h>
-#include<sys/stat.h>
-#include <unistd.h>
-#include <dirent.h>
-#include<pthread.h>
-
-*/
 #include "sorter_server.h"
 #include "mergesort.c"
 
-
+/*printing addressed correctly*/
 //void* thread_func(void *);
 
 
@@ -91,7 +62,7 @@ int main(int argc, char * argv[]){
 	//lisetining
 	listen(sockfd, 5);
 	//clilen = sizeof(client_add);
-	clilens[client_index] = sizeof(clients_addr[client_index]);
+	
 
 	printf("waiting for connection");
 	printf("\n");
@@ -102,6 +73,7 @@ int main(int argc, char * argv[]){
 	while (1){
 		//printf("accepting the conenction from someone\n");
 		//accepting
+		clilens[client_index] = sizeof(clients_addr[client_index]);
 		clients_sock[client_index] = accept(sockfd , (struct sockaddr *) &clients_addr[client_index] , &clilens[client_index]);
 
 		if (clients_sock[client_index] < 0){
